@@ -1,134 +1,161 @@
-🏆 Sports Intelligence Chatbot 
+# 🏆 Sports Intelligence Chatbot
 
-This project is an intelligent chatbot agent built for the AI Agent Development Internship Coding Challenge. It's an "Ask Me Anything" expert system for a specific sport (e.g., Football/Soccer), capable of answering a wide range of questions by leveraging a local knowledge base through a Retrieval-Augmented Generation (RAG) pipeline.
+An intelligent chatbot agent built for the **AI Agent Development Internship Coding Challenge**.  
+This is an **"Ask Me Anything" expert system** for a specific sport (e.g., Football/Soccer), capable of answering a wide range of questions by leveraging a **local knowledge base** through a **Retrieval-Augmented Generation (RAG) pipeline**.
 
-The agent can autonomously classify user queries and decide the best strategy to retrieve relevant information before generating a contextually accurate response.
+The agent autonomously classifies user queries and decides the best strategy to retrieve relevant information before generating a contextually accurate response.
 
-🏛️ Architecture Overview
-The chatbot operates on a RAG pipeline, which allows the Large Language Model (LLM) to access and use external knowledge before generating a response. This prevents hallucination and ensures the answers are based on factual data provided in the knowledge base.
+---
 
-The workflow is as follows:
+## 🏛️ Architecture Overview
 
-Knowledge Base Ingestion: Documents (PDF, TXT, MD) from the data/sports_knowledge_base directory are loaded and split into smaller, manageable chunks.
+The chatbot operates on a **RAG pipeline**, which allows the LLM to access and use external knowledge before generating a response.  
+This prevents hallucination and ensures answers are based on factual data provided in the knowledge base.
 
-Vector Embeddings: Each text chunk is converted into a numerical vector representation (embedding) using a sentence-transformer model from Hugging Face.
+**Workflow:**
 
-Vector Store: These embeddings are stored in a FAISS vector database, which allows for efficient similarity searches.
+1. **Knowledge Base Ingestion** – Documents (PDF, TXT, MD) from the `data/sports_knowledge_base/` directory are loaded and split into smaller, manageable chunks.
+2. **Vector Embeddings** – Each chunk is converted into a vector embedding using a Hugging Face sentence-transformer model.
+3. **Vector Store** – Embeddings are stored in a **FAISS vector database** for efficient similarity searches.
+4. **User Query** – Users ask a question via the **Streamlit interface**.
+5. **Query Classification** – The "Decision Engine" classifies the query (Factual, Comparative, Analytical, Non-Sport).
+6. **Strategic Retrieval** – Based on classification, the engine retrieves relevant chunks from FAISS.
+7. **Context Augmentation** – Retrieved chunks + query are merged into a detailed prompt.
+8. **Response Generation** – The prompt is sent to a local LLM (e.g., Flan-T5) to generate the final response.
+9. **Graceful Handling** – If query is "Non-Sport," the chatbot politely declines.
 
-User Query: The user asks a question through the Streamlit interface.
+**Pipeline Flow:**
 
-Query Classification: The agent's "Decision Engine" first classifies the query into a category (e.g., Factual, Comparative, Analytical, Non-Sport).
-
-Strategic Retrieval: Based on the category, the engine selects an appropriate RAG strategy to search the vector store for the most relevant document chunks.
-
-Context Augmentation: The retrieved chunks (context) and the original query are combined into a detailed prompt.
-
-Response Generation: The complete prompt is sent to a local LLM (e.g., Google's Flan-T5), which generates a human-like answer based only on the provided context.
-
-Graceful Handling: If a query is classified as "Non-Sport," the process is halted, and a polite refusal is returned.
-
+```
 [User Query] -> [Query Classifier] -> [Decision Engine] -> [RAG Strategy] -> [Vector Store]
       ^                                                                         |
       |                                                                         v
 [Final Answer] <- [LLM Generation] <- [Prompt Augmentation] <- [Retrieved Documents]
+```
 
-✨ Features
-Autonomous Decision-Making: Automatically classifies user queries and routes them to the best retrieval strategy.
+---
 
-Multi-Format Document Support: Ingests knowledge from PDF, TXT, and Markdown files.
+## ✨ Features
 
-Local & Offline: Runs entirely on a local machine after initial model downloads. No API keys required.
+- **Autonomous Decision-Making** – Classifies queries & selects best retrieval strategy.  
+- **Multi-Format Document Support** – Works with PDF, TXT, Markdown files.  
+- **Local & Offline** – Runs fully on local machine, no API keys required.  
+- **Efficient Vector Search** – Uses FAISS for high-speed retrieval.  
+- **Domain-Specific Focus** – Handles non-sport queries gracefully.  
+- **Interactive UI** – Simple chat interface powered by Streamlit.  
 
-Efficient Vector Search: Utilizes FAISS for fast and memory-efficient information retrieval.
+---
 
-Domain-Specific Focus: Gracefully handles and declines questions outside the sports domain.
+## 🛠️ Tech Stack
 
-Interactive UI: A simple and user-friendly chat interface built with Streamlit.
+- **Core Framework** – [LangChain](https://www.langchain.com/)  
+- **LLM & Embeddings** – [Hugging Face](https://huggingface.co/)  
+  - `google/flan-t5-small` (LLM)  
+  - `sentence-transformers/all-MiniLM-L6-v2` (Embeddings)  
+- **Vector Database** – [FAISS](https://github.com/facebookresearch/faiss)  
+- **UI** – [Streamlit](https://streamlit.io/)  
+- **Document Loaders** – `pypdf`, `unstructured`  
 
-🛠️ Tech Stack
-Core Framework: LangChain
+---
 
-LLM & Embeddings: Hugging Face (google/flan-t5-small, sentence-transformers/all-MiniLM-L6-v2)
+## 🚀 Setup and Installation
 
-Vector Database: FAISS (Facebook AI Similarity Search)
+### Prerequisites
+- Python 3.9+  
+- pip (Python package installer)  
 
-UI: Streamlit
-
-Document Loaders: pypdf, Unstructured
-
-🚀 Setup and Installation
-Follow these steps to set up and run the project locally.
-
-Prerequisites
-Python 3.9+
-
-pip (Python package installer)
-
-1. Clone the Repository
+### 1. Clone the Repository
+```bash
 git clone https://github.com/your-username/sport_bot.git
 cd sport_bot
+```
 
-2. Create a Virtual Environment (Recommended)
-# For macOS/Linux
+### 2. Create a Virtual Environment (Recommended)
+
+**macOS/Linux**
+```bash
 python3 -m venv venv
 source venv/bin/activate
+```
 
-# For Windows
+**Windows**
+```bash
 python -m venv venv
-.\venv\Scripts\activate
+.env\Scriptsctivate
+```
 
-3. Install Dependencies
-Install all the required Python libraries using the requirements.txt file.
-
+### 3. Install Dependencies
+```bash
 pip install -r requirements.txt
+```
 
-⚙️ Usage
-1. Add Your Knowledge Base
-Place your sports-related documents (PDF, TXT, or MD files) inside the data/sports_knowledge_base/ directory. The application will automatically detect and process them.
+---
 
-Important: This directory must contain at least one document for the chatbot to work.
+## ⚙️ Usage
 
-2. Build the Vector Store
-Before running the chatbot for the first time, you need to process your documents and create the FAISS vector index.
+### 1. Add Your Knowledge Base
+Place your **sports-related documents (PDF, TXT, MD)** inside:
+```
+data/sports_knowledge_base/
+```
 
-Run the following command from the root directory of the project:
+⚠️ Must contain at least **one document** for the chatbot to work.
 
+---
+
+### 2. Build the Vector Store
+```bash
 python -m src.vector_store
+```
+This generates a `vector_store/` directory with the FAISS index.  
+Re-run if you **add, remove, or modify** documents.
 
-This will create a vector_store/ directory containing the faiss_index. You only need to run this script once, or whenever you add, remove, or change the documents in your knowledge base.
+---
 
-3. Launch the Chatbot
-Start the interactive Streamlit application with the following command:
-
+### 3. Launch the Chatbot
+```bash
 streamlit run demo.py
+```
 
-Your web browser will automatically open with the chatbot interface, ready for you to ask questions!
+This opens the chatbot interface in your web browser. ✅
 
-🧠 Design Decisions
-Local LLM (google/flan-t5-small): This model was chosen because it is small enough to run on a standard laptop with <= 8GB of RAM, satisfying the project's technical constraints. It's an instruction-tuned model, which makes it effective at following the RAG prompt.
+---
 
-Keyword-Based Query Classifier: A simple, rule-based classifier was implemented for speed and reliability. It avoids the overhead of training a separate ML model for classification and is highly effective for distinguishing between the required query types (Factual, Comparative, etc.).
+## 🧠 Design Decisions
 
-Sentence Transformers for Embeddings: The all-MiniLM-L6-v2 model provides an excellent balance of performance and speed for generating high-quality embeddings, making it ideal for this local-first application.
+- **Local LLM (`google/flan-t5-small`)** – Runs on standard laptops with ≤ 8GB RAM. Instruction-tuned for better RAG performance.  
+- **Keyword-Based Query Classifier** – Simple rule-based system, fast and reliable.  
+- **Sentence Transformers (`all-MiniLM-L6-v2`)** – Balance of speed and embedding quality.  
+- **FAISS Vector Store** – High-speed similarity search without requiring a full DB server.  
+- **Streamlit UI** – Quick and user-friendly chat interface.  
 
-FAISS for Vector Store: FAISS is incredibly fast and memory-efficient, making it a perfect choice for running similarity searches on a local machine without requiring a dedicated database server.
+---
 
-Streamlit for UI: Streamlit was chosen for its ability to rapidly create an interactive and user-friendly web interface with minimal code, allowing for a focus on the core AI logic.
+## 📁 Directory Structure
 
-📁 Directory Structure
+```
 sport_bot/
 ├── src/
 │   ├── document_processor.py   # Loads and chunks documents
 │   ├── vector_store.py         # Creates and manages the FAISS vector store
 │   ├── query_classifier.py     # Classifies user queries
-│   ├── rag_strategies.py       # Defines different retrieval methods
-│   ├── decision_engine.py      # Routes queries to the correct strategy
-│   └── sports_chatbot.py       # Core chatbot logic and RAG chain
+│   ├── rag_strategies.py       # Defines retrieval methods
+│   ├── decision_engine.py      # Routes queries to correct strategy
+│   └── sports_chatbot.py       # Core chatbot logic & RAG chain
 ├── data/
-│   └── sports_knowledge_base/  # Place your PDF, TXT, MD files here
+│   └── sports_knowledge_base/  # Place sports docs here
 ├── vector_store/
 │   └── faiss_index/            # Generated by vector_store.py
 ├── requirements.txt            # Project dependencies
 ├── README.md                   # This file
-└── demo.py                     # The Streamlit application entry point
+└── demo.py                     # Streamlit app entry point
+```
+
+---
+
+## 📌 Future Improvements
+- Add support for **multi-sport query handling**.  
+- Improve query classifier with a **small ML model**.  
+- Integrate advanced **retrieval strategies** for analytical queries.  
+
 
