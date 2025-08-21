@@ -1,0 +1,23 @@
+# Core LangChain library
+langchain
+
+# For document loading (PDFs, text files)
+langchain-community
+
+# For Hugging Face models and embeddings
+langchain-huggingface
+
+# Vector Store
+faiss-cpu
+
+# For loading PDF files
+pypdf
+
+# For creating the interactive demo
+streamlit
+
+# Sentence Transformers for embeddings
+sentence-transformers
+
+# PyTorch (required by transformers)
+torch
