@@ -75,3 +75,4 @@ else:
     st.warning("Chatbot is not available due to an initialization error. Please check the logs.")    # Log initialization errors
 
  #this is the demo.py file where all the Streamlit UI code resides and also it's an entry point for the application
+ #use python -m src.vector_store and python -m src.decision_engine and streamlit run demo.py

@@ -159,3 +159,6 @@ sport_bot/
 - Integrate advanced **retrieval strategies** for analytical queries.  
 
 
+
+
+To make it more usable in various sports more files to be added soon..! 
