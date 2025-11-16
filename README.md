@@ -66,7 +66,7 @@ This prevents hallucination and ensures answers are based on factual data provid
 
 ### 1. Clone the Repository
 ```bash
-git clone https://github.com/your-username/sport_bot.git
+git clone https://github.com/thisisnaimesh01/sport_bot.git
 cd sport_bot
 ```
 
