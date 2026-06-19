@@ -1,4 +1,4 @@
-# 🏆 Sports Intelligence Chatbot
+# Sports Intelligence Chatbot
 
 An intelligent chatbot agent built for the **AI Agent Development Internship Coding Challenge**.  
 This is an **"Ask Me Anything" expert system** for a specific sport (e.g., Football/Soccer), capable of answering a wide range of questions by leveraging a **local knowledge base** through a **Retrieval-Augmented Generation (RAG) pipeline**.
@@ -7,7 +7,7 @@ The agent autonomously classifies user queries and decides the best strategy to 
 
 ---
 
-## 🏛️ Architecture Overview
+## Architecture Overview
 
 The chatbot operates on a **RAG pipeline**, which allows the LLM to access and use external knowledge before generating a response.  
 This prevents hallucination and ensures answers are based on factual data provided in the knowledge base.
@@ -35,7 +35,7 @@ This prevents hallucination and ensures answers are based on factual data provid
 
 ---
 
-## ✨ Features
+## Features
 
 - **Autonomous Decision-Making** – Classifies queries & selects best retrieval strategy.  
 - **Multi-Format Document Support** – Works with PDF, TXT, Markdown files.  
